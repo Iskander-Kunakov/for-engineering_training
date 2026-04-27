@@ -20,5 +20,5 @@ while True:
     b=list(bin(num))[2:]
     s=list(map(int, b))
     c=[0]*(8-len(b))+s
-    print(num, c)
+
     rpg.output(leds, c)
