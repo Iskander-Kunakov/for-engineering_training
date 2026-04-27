@@ -8,6 +8,8 @@ rpg.output(leds, 0)
 num=0
 
 while True:
+    if rpg.input(9)*rpg.input(10):
+        num = 256
     if rpg.input(9):
         if num < 255:
             num+=1
