@@ -8,17 +8,17 @@ rpg.output(leds, 0)
 num=0
 
 while True:
-    if rpg.input(9)*rpg.input(10):
-        num = 256
-    if rpg.input(9):
-        if num < 255:
-            num+=1
-    if rpg.input(10):
-        if num > 0:
-            num-=1
-    time.sleep(0.2)
-    b=list(bin(num))[2:]
-    s=list(map(int, b))
-    c=[0]*(8-len(b))+s
+   if rpg.input(9)*rpg.input(10):
+      num = 256
+   if rpg.input(9):
+      if num < 256:
+         num=(num+1)%256
+   if rpg.input(10):
+      if num > 0:
+         num-=1
+   time.sleep(0.1)
+   b=list(bin(num))[2:]
+   s=list(map(int, b))
+   c=[0]*(8-len(b))+s
 
-    rpg.output(leds, c)
+   rpg.output(leds, c)

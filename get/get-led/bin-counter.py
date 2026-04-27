@@ -9,8 +9,8 @@ num=0
 
 while True:
     if rpg.input(9):
-        if num < 255:
-            num+=1
+        if num < 256:
+            num=(num+1)%256
     if rpg.input(10):
         if num > 0:
             num-=1
