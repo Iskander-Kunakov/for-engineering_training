@@ -1,7 +1,11 @@
-import RPi.GPIO as GPIO 
+import r2r_dac as r2r 
+import RPi.GPIO as GPIO
+import signal_generator as sg 
+import time 
 
-leds = [16,20,21,25,26,17,27,22]
-gpio_bits = leds
+amplitude = 3.2 
+signal_frequency = 10 
+sampling_frequency = 1000 
 
 class R2R_DAC:
     def __init__(self, gpio_bits, dynamic_range, verbose = False):
@@ -30,18 +34,22 @@ class R2R_DAC:
         print(digital_value, bit_list)
 
         GPIO.output(self.gpio_bits, bit_list)
+dynamic_range = 3.3
+dac = r2r.R2R_DAC([16,20,21,25,26,17,27,22], dynamic_range)
+try:
+    print(f"Частота:{signal_frequency}Hz, Амплитуда:{amplitude}V")
 
-if __name__ == "__main__":
-    try:
-        dac = R2R_DAC(gpio_bits, 3.183, True)
+    start_time = time.time()
 
-        while True:
-            try:
-                voltage = float(input("Введите напряжение в Вольтах: "))
-                dac.set_voltage(voltage)
+    while True:
+        current_time = time.time() - start_time 
 
-            except ValueError:
-                print("Вы ввели не число. Попробуйте ещё раз \n")
-    
-    finally:
-        dac.deinit()
+        norm_amp = sg.get_sin_wave_amplitude(signal_frequency, current_time)
+        target_voltage = norm_amp * amplitude
+        dac.set_voltage(target_voltage)
+        sg.wait_for_sampling_period(sampling_frequency)
+except KeyboardInterrupt:
+    print("Остановлено")
+finally:
+    dac.deinit()
+    print("Чистка GPIO выполнена")
