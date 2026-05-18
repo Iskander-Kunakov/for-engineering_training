@@ -3,8 +3,8 @@ import signal_generator as sg
 import time 
 import mcp4725_driver as pwm
 
-amplitude = 3.0
-signal_frequency = 10    
+amplitude = 3.0/2
+signal_frequency = 1    
 sampling_frequency = 1000 
 
 
